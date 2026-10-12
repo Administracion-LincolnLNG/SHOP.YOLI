@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>YOLYSHOP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Gloock&family=Figtree:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --fondo:#fdf7fb; --mora:#3a1f4a; --lila:#b58ad6; --rosa:#f6c6dd;
+  --suave:#f6eefa; --wa:#25a866; --wa2:#1b8a50;
+  --serif:"Gloock",Georgia,serif; --sans:"Figtree",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+  font-family:var(--sans);color:var(--mora);line-height:1.55;background-color:var(--fondo);
+  background-image:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><g fill='%23b58ad6' fill-opacity='.12'><path d='M40 22 L46 40 L64 46 L46 52 L40 70 L34 52 L16 46 L34 40 Z'/><path d='M180 150 L185 165 L200 170 L185 175 L180 190 L175 175 L160 170 L175 165 Z'/></g><g fill='%23f6c6dd' fill-opacity='.5'><ellipse cx='150' cy='50' rx='12' ry='20' transform='rotate(25 150 50)'/><circle cx='200' cy='40' r='4'/><circle cx='30' cy='120' r='3'/></g></svg>");
+  background-attachment:fixed;
+}
+a{color:inherit}
+a:focus-visible,button:focus-visible{outline:3px solid var(--lila);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+/* Barra superior con menú */
+.top{position:sticky;top:0;z-index:10;background:rgba(253,247,251,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(58,31,74,.08)}
+.barra{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:14px 0}
+.marca{font-family:var(--serif);font-size:1.6rem;text-decoration:none}
+.marca i{font-style:normal;color:var(--lila)}
+.menu{display:flex;gap:6px;flex-wrap:wrap;padding-bottom:12px}
+.menu a{font-weight:600;font-size:.95rem;text-decoration:none;padding:6px 14px;border-radius:999px;transition:background .2s}
+.menu a:hover{background:var(--rosa)}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:700;border-radius:999px;padding:12px 22px;transition:background .2s,transform .2s,color .2s}
+.btn:active{transform:scale(.98)}
+.btn-wa{background:var(--wa);color:#fff}.btn-wa:hover{background:var(--wa2)}
+.btn-linea{border:2px solid var(--mora)}.btn-linea:hover{background:var(--mora);color:var(--fondo)}
+
+/* Marco de producto */
+.marco{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--tono,#f6c6dd),#fff);border-radius:24px;aspect-ratio:1/1}
+.marco img{width:100%;height:100%;object-fit:cover;display:block}
+.marco.carnet{width:196px;height:196px;max-width:100%;aspect-ratio:auto;border-radius:18px;margin:0 auto;border:4px solid #fff;box-shadow:0 10px 24px -12px rgba(58,31,74,.35)}
+
+/* Portada */
+.portada{display:grid;grid-template-columns:1.05fr 1fr;gap:48px;align-items:center;padding:48px 0 72px}
+.portada h1{font-family:var(--serif);font-weight:400;font-size:clamp(2.6rem,6vw,4.6rem);line-height:1.04}
+.portada p{margin:20px 0 30px;font-size:1.15rem;max-width:32ch}
+.acciones{display:flex;gap:12px;flex-wrap:wrap}
+.abanico{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.abanico .marco{box-shadow:0 18px 40px -18px rgba(58,31,74,.35);animation:sube .9s cubic-bezier(.2,.8,.2,1) both}
+.abanico .marco:nth-child(2){transform:translateY(-18px)}
+@keyframes sube{from{opacity:0;translate:0 30px}to{opacity:1;translate:0 0}}
+
+/* Secciones */
+.seccion{padding:56px 0}
+.seccion h2{font-family:var(--serif);font-weight:400;font-size:clamp(1.9rem,4vw,2.7rem)}
+.subtitulo{margin-top:8px;opacity:.75}
+
+/* Catálogo */
+.filtros{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 32px}
+.chip{font:inherit;font-weight:600;cursor:pointer;border:2px solid var(--mora);background:rgba(253,247,251,.9);color:inherit;border-radius:999px;padding:6px 16px}
+.chip[aria-pressed="true"]{background:var(--mora);color:var(--fondo)}
+.grilla{display:grid;grid-template-columns:repeat(4,1fr);gap:36px 24px}
+.card{display:flex;flex-direction:column;background:#fff;border-radius:26px;padding:16px;box-shadow:0 14px 30px -22px rgba(58,31,74,.35)}
+.card h3{font-family:var(--serif);font-weight:400;font-size:1.25rem;margin:14px 6px 2px}
+.card p{font-size:.95rem;opacity:.8;margin:0 6px}
+.precio{font-weight:700;color:var(--lila);margin:6px 6px 14px;font-size:1.1rem}
+.card .btn{margin-top:auto;padding:10px 16px}
+
+/* Equipo */
+.equipo{background:rgba(255,255,255,.7)}
+.equipo-grilla{display:grid;grid-template-columns:repeat(3,1fr);gap:36px 28px;margin-top:32px}
+.perfil{display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--fondo);border-radius:26px;padding:24px;box-shadow:0 14px 30px -20px rgba(58,31,74,.3)}
+.perfil h3{font-family:var(--serif);font-weight:400;font-size:1.5rem;margin:18px 0 2px}
+.perfil .rol{font-weight:700;color:var(--lila);font-size:.9rem;letter-spacing:.06em}
+.perfil .btn{margin-top:auto}
+
+/* Visítanos */
+.visita{background:var(--suave)}
+.bloques{display:grid;grid-template-columns:1.6fr 1fr;gap:24px;margin-top:28px}
+.mapa{border-radius:22px;overflow:hidden;min-height:340px;background:#fff;display:flex;flex-direction:column}
+.mapa iframe{flex:1;border:0;width:100%;min-height:290px}
+.mapa .btn{border-radius:0;padding:12px}
+.lado{display:grid;gap:16px;align-content:start}
+.red{display:flex;align-items:center;gap:16px;text-decoration:none;background:#fff;border-radius:22px;padding:20px 22px;transition:transform .2s}
+.red:hover{transform:translateY(-3px)}
+.red svg{width:38px;height:38px;flex:none;fill:none;stroke:var(--lila);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.red b{display:block;font-family:var(--serif);font-weight:400;font-size:1.25rem}
+.red span{font-size:.9rem;opacity:.75}
+.horario{padding:6px 4px;font-size:.95rem}
+
+footer{padding:28px 0;text-align:center;font-size:.9rem;opacity:.7}
+
+@media (max-width:900px){
+  .portada{grid-template-columns:1fr;gap:36px}
+  .grilla{grid-template-columns:repeat(2,1fr)}
+  .equipo-grilla{grid-template-columns:repeat(2,1fr)}
+  .bloques{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .wrap{padding:0 16px}
+  .grilla,.equipo-grilla{gap:28px 14px}
+  .barra .btn{display:none}
+  .card{padding:12px}
+  .perfil{padding:16px}
+  .marco.carnet{width:100%;height:auto;aspect-ratio:1/1}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="barra">
+      <a class="marca" href="#" id="marca"></a>
+      <a class="btn btn-wa" id="waTop" target="_blank" rel="noopener">Escríbenos</a>
+    </div>
+    <nav class="menu" id="menu" aria-label="Menú de categorías">
+      <a href="#catalogo" data-cat="Todos">Todo</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+  <section class="portada">
+    <div>
+      <h1 id="lema"></h1>
+      <p>Elige lo que más te guste y pídelo directo por WhatsApp.</p>
+      <div class="acciones">
+        <a class="btn btn-wa" href="#catalogo">Ver productos</a>
+        <a class="btn btn-linea" href="#equipo">Nuestro equipo</a>
+        <a class="btn btn-linea" id="btnIg" target="_blank" rel="noopener">Instagram</a>
+        <a class="btn btn-linea" id="btnTt" target="_blank" rel="noopener">TikTok</a>
+      </div>
+    </div>
+    <div class="abanico" id="abanico" aria-hidden="true"></div>
+  </section>
+</div>
+
+<section class="seccion" id="catalogo">
+  <div class="wrap">
+    <h2>Productos</h2>
+    <div class="filtros" id="filtros"></div>
+    <div class="grilla" id="grilla"></div>
+  </div>
+</section>
+
+<section class="seccion equipo" id="equipo">
+  <div class="wrap">
+    <h2>Nuestro equipo</h2>
+    <p class="subtitulo">Conoce a las chicas que te van a atender.</p>
+    <div class="equipo-grilla" id="equipoGrilla"></div>
+  </div>
+</section>
+
+<section class="seccion visita" id="visitanos">
+  <div class="wrap">
+    <h2>Visítanos</h2>
+    <div class="bloques">
+      <div class="mapa">
+        <iframe id="mapa" title="Mapa de ubicación" loading="lazy"></iframe>
+        <a class="btn btn-wa" id="abrirMapa" target="_blank" rel="noopener">Abrir en Google Maps</a>
+      </div>
+      <div class="lado">
+        <a class="red" id="ig" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6"/></svg>
+          <div><b>Instagram</b><span>Mira nuestras novedades</span></div>
+        </a>
+        <a class="red" id="tt" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M14 3v11.2a3.7 3.7 0 1 1-3.7-3.7"/><path d="M14 3c.3 2.4 1.9 4.1 4.5 4.4"/></svg>
+          <div><b>TikTok</b><span>Videos de nuestros productos</span></div>
+        </a>
+        <a class="red" id="waCaja" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24"><path d="M3 21l1.6-4.6A8.5 8.5 0 1 1 8 19.6L3 21z"/></svg>
+          <div><b>WhatsApp</b><span>Pregunta o haz tu pedido</span></div>
+        </a>
+        <p class="horario" id="horario"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer><div class="wrap" id="pie"></div></footer>
+
+<script src="datos.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+const TONOS = ["#f6c6dd","#e4d0f2","#ffe3ee","#d9c6f0"];
+const wa = texto => "https://wa.me/" + CONFIG.whatsapp + (texto ? "?text=" + encodeURIComponent(texto) : "");
+
+// Datos generales
+document.title = CONFIG.negocio + " | Tienda";
+const partes = CONFIG.negocio.match(/^(\S+)(.*)$/);
+$("marca").innerHTML = partes[1] + (partes[2].trim() ? " <i>" + partes[2].trim() + "</i>" : "");
+$("lema").textContent = CONFIG.lema;
+$("waTop").href = wa(); $("waCaja").href = wa();
+$("ig").href = CONFIG.instagram; $("tt").href = CONFIG.tiktok;
+$("btnIg").href = CONFIG.instagram; $("btnTt").href = CONFIG.tiktok;
+$("horario").textContent = CONFIG.horario || "";
+$("pie").textContent = "© " + new Date().getFullYear() + " " + CONFIG.negocio;
+const q = encodeURIComponent(CONFIG.direccion);
+$("mapa").src = "https://maps.google.com/maps?q=" + q + "&output=embed";
+$("abrirMapa").href = "https://www.google.com/maps/search/?api=1&query=" + q;
+
+// Marco de foto
+function marco(item, i, carnet){
+  const d = document.createElement("div");
+  d.className = "marco" + (carnet ? " carnet" : "");
+  d.style.setProperty("--tono", TONOS[i % TONOS.length]);
+  const img = new Image(); img.alt = item.nombre; img.loading = "lazy";
+  img.onerror = () => img.remove(); img.src = item.imagen;
+  d.append(img); return d;
+}
+
+// Portada: primeros 3 productos
+PRODUCTOS.slice(0, 3).forEach((p, i) => $("abanico").append(marco(p, i, false)));
+
+// Menú de categorías (se crea solo desde CATEGORIAS)
+const menu = $("menu");
+CATEGORIAS.forEach(c => {
+  const a = document.createElement("a");
+  a.href = "#catalogo"; a.textContent = c; a.dataset.cat = c;
+  menu.append(a);
+});
+
+// Catálogo + filtros
+function pintarProductos(cat){
+  $("grilla").innerHTML = "";
+  PRODUCTOS.forEach((p, i) => {
+    if (cat !== "Todos" && p.categoria !== cat) return;
+    const c = document.createElement("article"); c.className = "card";
+    c.append(marco(p, i, false));
+    c.insertAdjacentHTML("beforeend",
+      "<h3></h3>" + (p.descripcion ? "<p></p>" : "") + (p.precio ? '<div class="precio"></div>' : ""));
+    c.querySelector("h3").textContent = p.nombre;
+    if (p.descripcion) c.querySelector("p").textContent = p.descripcion;
+    if (p.precio) c.querySelector(".precio").textContent = p.precio;
+    const b = document.createElement("a");
+    b.className = "btn btn-wa"; b.textContent = CONFIG.textoBotonProducto;
+    b.target = "_blank"; b.rel = "noopener";
+    b.href = wa(CONFIG.mensajeProducto + " " + p.nombre);
+    b.setAttribute("aria-label", CONFIG.textoBotonProducto + ": " + p.nombre);
+    c.append(b); $("grilla").append(c);
+  });
+}
+
+function activarCategoria(cat){
+  document.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", x.dataset.cat === cat));
+  document.querySelectorAll(".menu a").forEach(x => x.style.background = x.dataset.cat === cat ? "var(--rosa)" : "");
+  pintarProductos(cat);
+}
+
+// Botones de filtro
+["Todos", ...CATEGORIAS].forEach(c => {
+  const b = document.createElement("button");
+  b.className = "chip"; b.textContent = c; b.dataset.cat = c;
+  b.onclick = () => activarCategoria(c);
+  $("filtros").append(b);
+});
+
+// Menú superior: filtra y baja al catálogo
+document.querySelectorAll(".menu a").forEach(a => {
+  a.addEventListener("click", () => activarCategoria(a.dataset.cat || "Todos"));
+});
+document.querySelector('.menu a[data-cat="Todos"]').dataset.cat = "Todos";
+
+activarCategoria("Todos");
+
+// Equipo
+TRABAJADORAS.forEach((t, i) => {
+  const p = document.createElement("article"); p.className = "perfil";
+  p.append(marco(t, i, true));
+  p.insertAdjacentHTML("beforeend", "<h3></h3>" + (t.rol ? '<div class="rol"></div>' : "") + (t.descripcion ? "<p></p>" : ""));
+  p.querySelector("h3").textContent = t.nombre;
+  if (t.rol) p.querySelector(".rol").textContent = t.rol;
+  if (t.descripcion) p.querySelector("p").textContent = t.descripcion;
+  const b = document.createElement("a");
+  b.className = "btn btn-wa"; b.textContent = "Consultar";
+  b.target = "_blank"; b.rel = "noopener";
+  b.href = wa("Hola YOLYSHOP, quiero consultar con " + t.nombre);
+  p.append(b); $("equipoGrilla").append(p);
+});
+if (!TRABAJADORAS.length) $("equipo").style.display = "none";
+</script>
+</body>
+</html>
